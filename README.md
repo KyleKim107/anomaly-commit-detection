@@ -1,52 +1,35 @@
-## How to run
+# Unsupervised Vulnerability Detection in GitHub Commits
 
-python3 isolation_forest.py <repo_name> <number of commits to check>
+This project focuses on identifying vulnerability-introducing commits in GitHub repositories using unsupervised machine learning and anomaly detection techniques. It was developed as a part of the Data Mining course project at Texas A&M University.
 
-ex.
-python3 isolation_forest.py pandas 1000
+## 🚀 Key Features
 
-ensure the repo that you are testing is in the same folder as the script
+- **Data Mining Pipeline:** Automated git log parsing and feature extraction from CVE-linked datasets.
+- **Feature Engineering:** Extracts metadata features (e.g., line churn, message entropy, commit timing) and semantic features using **CodeBERT**.
+- **Anomaly Detection Models:** Implements and compares multiple approaches:
+  - Base Isolation Forest (Statistical features)
+  - Weighted Security Features
+  - Code Embedding-based detection
+  - **Hybrid Ensemble Method** (Combining all the above)
+- **Evaluation:** Performance analysis across various contamination levels using curated Java vulnerability datasets.
 
-flowchart LR
-    subgraph Input
-        A[📄 CVE Data]
-    end
-    
-    subgraph Repo
-        B{Exists?}
-        C[📥 Clone]
-        D[📂 Local]
-    end
-    
-    subgraph Cache
-        E{Cached?}
-        F[📦 Load]
-        K[💾 Save]
-    end
-    
-    subgraph Process
-        G[⛏️ Mine]
-        H[🔍 Parse]
-        I[📊 Features]
-        J[🧠 Embed]
-    end
-    
-    subgraph Detect
-        L[🎯 Isolation Forest]
-        M[📈 Evaluate]
-        N[📋 Report]
-    end
-    
-    A --> B
-    B -->|No| C --> D
-    B -->|Yes| D
-    D --> E
-    E -->|Yes| F --> L
-    E -->|No| G --> H --> I --> J --> K --> L
-    L --> M --> N
-    
-    style A fill:#e1f5fe
-    style F fill:#fff3e0
-    style K fill:#fff3e0
-    style L fill:#f3e5f5
-    style N fill:#e8f5e9
+## 🛠 Tech Stack
+
+- **Language:** Python
+- **Libraries:** Scikit-learn, Pandas, NumPy, Matplotlib, XGBoost
+- **Models:** Isolation Forest, Random Forest, CodeBERT (Transformers)
+
+## 📊 Methodology
+
+1. **Phase 1 (Setup):** Collects CVE data and clones relevant GitHub repositories.
+2. **Phase 2 (Engineer):** Parses git logs to extract statistical metadata and generates code embeddings.
+3. **Phase 3 (Detect):** Trains unsupervised models to score commits based on their "anomaly" level.
+4. **Phase 4 (Evaluate):** Reports detection rates and F1 scores against known vulnerability labels.
+
+## 📈 Results
+
+The Hybrid Ensemble approach showed superior performance, particularly at a 10% contamination level, demonstrating the effectiveness of combining metadata with semantic code understanding.
+
+---
+
+**Collaborators:** Kyle Kim, Harshith Reddy
